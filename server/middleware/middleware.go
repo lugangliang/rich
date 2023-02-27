@@ -7,12 +7,15 @@ import (
 
 func Logging(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
-		log.Printf("recv a %s request from %s", req.Method, req.RemoteAddr)
+		log.Printf("recv a %s request from %s, log", req.Method, req.RemoteAddr)
 		next.ServeHTTP(w, req)
 	})
 }
 
-func Validate(next http.Handler) *http.Handler {
+func Validate(next http.Handler) http.Handler {
 
-	next.ServeHTTP()
+	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+		log.Printf("recv a %s request from %s, valid", req.Method, req.RemoteAddr)
+		next.ServeHTTP(w, req)
+	})
 }

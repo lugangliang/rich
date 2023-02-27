@@ -8,11 +8,11 @@ import (
 )
 
 type MemStore struct {
-	books map[string]*mystore.Book
+	books map[string]mystore.Book
 }
 
-func (ms *MemStore) Create(name string, book *mystore.Book) error {
-	ms.books[name] = book
+func (ms *MemStore) Create(book mystore.Book) error {
+	ms.books[book.Id] = book
 
 	return nil
 }
@@ -25,9 +25,9 @@ func (ms *MemStore) Delete(name string) error {
 
 }
 
-func (ms *MemStore) GetAll() ([]*mystore.Book, error) {
+func (ms *MemStore) GetAll() ([]mystore.Book, error) {
 
-	var allBooks []*mystore.Book
+	var allBooks []mystore.Book
 
 	for _, Book := range ms.books {
 		allBooks = append(allBooks, Book)
@@ -36,14 +36,16 @@ func (ms *MemStore) GetAll() ([]*mystore.Book, error) {
 	return allBooks, nil
 }
 
-func (ms *MemStore) Get(name string) (book *mystore.Book, err error) {
-	if _, exist := ms.books[name]; !exist {
-		return nil, errors.New("Not found")
+func (ms *MemStore) Get(id string) (book mystore.Book, err error) {
+	if _, exist := ms.books[id]; !exist {
+		return mystore.Book{
+			Id: "123",
+		}, errors.New("Not found")
 	}
-	return ms.books[name], nil
+	return ms.books[id], nil
 }
 
-func (ms *MemStore) Update(name string, newBook *mystore.Book) error {
+func (ms *MemStore) Update(name string, newBook mystore.Book) error {
 	ms.books[name] = newBook
 
 	return nil
@@ -52,6 +54,6 @@ func (ms *MemStore) Update(name string, newBook *mystore.Book) error {
 func init() {
 	fmt.Println("Register memory store to factory.")
 	storefactory.Register("mem", &MemStore{
-		books: make(map[string]*mystore.Book),
+		books: make(map[string]mystore.Book),
 	})
 }

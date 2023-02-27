@@ -8,9 +8,9 @@ type Book struct {
 }
 
 type Store interface {
-	Create(name string, book *Book) error
-	Update(name string, book *Book) error
-	Get(name string) (*Book, error)
-	GetAll() ([]*Book, error)
-	Delete(name string) error
+	Create(book Book) error
+	Update(id string, book Book) error
+	Get(id string) (Book, error)
+	GetAll() ([]Book, error)
+	Delete(id string) error
 }
