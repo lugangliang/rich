@@ -1,0 +1,37 @@
+range 用法
+
+gorilla 工具集
+
+空接口
+
+工厂模式
+
+json 序列化，编解码
+
+url参数与body解析
+
+http.HandlerFunc 函数也可以是个类型。
+
+byte与rune与string类型的区别，中国人的N中表示方法
+    "\u4e2d\u56fd\u4eba" // 中国人
+    "\U00004e2d\U000056fd\U00004eba" // 中国人
+    "中\u56fd\u4eba" // 中国人，不同字符字面值形式混合在一起
+    "\xe4\xb8\xad\xe5\x9b\xbd\xe4\xba\xba" // 十六进制表示的字符串字面值：中国人
+
+unicode与utf-8
+
+类型转换
+
+go的枚举与常量、iota
+
+数组与切片，数组的初始化方式，切片自动扩容会触发解除与原数组的绑定关系
+
+
+
+
+
+
+
+
+
+
