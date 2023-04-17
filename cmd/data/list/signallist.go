@@ -107,7 +107,66 @@ func (list *SingleList) PrintList() {
 	fmt.Println()
 }
 
-func main() {
+var record = map[int]int{
+	1: 1,
+	2: 2,
+}
+
+func grow1(n int) int {
+
+	if _, ok := record[n]; ok {
+		fmt.Printf("num %d is processed, value is %d .\n", n, record[n])
+		return record[n]
+	}
+
+	fmt.Printf("num %d is start processin .\n", n)
+
+	if n == 1 {
+		return 1
+	}
+
+	if n == 2 {
+		return 2
+	}
+
+	resn1 := grow1(n - 1)
+	resn2 := grow1(n - 2)
+	res := resn1 + resn2
+
+	record[n] = res
+	fmt.Printf("num %d is processed, value is %d from lower .\n", n, record[n])
+
+	return res
+}
+
+func grow2(n int) int {
+	fmt.Printf("num %d is start processin .\n", n)
+
+	if n == 1 {
+		return 1
+	}
+
+	if n == 2 {
+		return 2
+	}
+
+	resn1 := grow2(n - 1)
+	resn2 := grow2(n - 2)
+	res := resn1 + resn2
+	fmt.Printf("num %d is processed, value is %d from lower .\n", n, res)
+
+	return res
+}
+
+func num(n int) int {
+	if n == 1 {
+		return 1
+	}
+
+	return num(n-1) + 1
+}
+
+func test() {
 	head := newList()
 	head.PrintList()
 
@@ -118,5 +177,11 @@ func main() {
 	time.Sleep(2 * time.Second)
 	head.reserveSingleListMethod2()
 	head.PrintList()
+}
+
+func main() {
+	//fmt.Println(grow2(10))
+	//fmt.Println(num(6))
+
 	fmt.Println("Learn single list.")
 }
