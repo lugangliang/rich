@@ -6,15 +6,17 @@ import (
 	"time"
 )
 
-var arr []int
+var quickArr []int
 
 func genRandNum() {
-	for i := 0; i < 21; i++ {
+	rand.Seed(time.Now().UnixNano())
+	n := rand.Intn(33)
+	for i := 0; i < n; i++ {
 		rand.Seed(time.Now().UnixNano())
 		time.Sleep(time.Microsecond)
-		arr = append(arr, rand.Intn(100))
+		quickArr = append(quickArr, rand.Intn(100))
 	}
-	fmt.Println(arr, len(arr), cap(arr))
+	fmt.Println(quickArr, len(quickArr), cap(quickArr))
 }
 
 // 奇数个元素
@@ -24,22 +26,20 @@ func genRandNum() {
 // 1个元素
 // 2个元素
 
-func partion(arr []int, left int, right int) int {
+func partion(quickArr []int, left int, right int) int {
 
-	value := arr[right]
+	value := quickArr[right]
 
 	i := left
 
 	for j := left; j < right; j++ {
-		if arr[j] < value {
-			arr[j], arr[i] = arr[i], arr[j]
+		if quickArr[j] < value {
+			quickArr[j], quickArr[i] = quickArr[i], quickArr[j]
 			i++
 		}
-		time.Sleep(200 * time.Millisecond)
-		fmt.Println(i, j)
 	}
 
-	arr[i], arr[right] = arr[right], arr[i]
+	quickArr[i], quickArr[right] = quickArr[right], quickArr[i]
 
 	return i
 }
@@ -50,25 +50,40 @@ func quickSort1(arr []int) {
 
 }
 
-func quickSortSub1(arr []int, left int, right int) {
+func quickSortSub1(Arr []int, left int, right int) {
 
 	if left >= right {
 		return
 	}
 
-	pivot := partion(arr, left, right)
+	pivot := partion(Arr, left, right)
 
-	quickSortSub1(arr, left, pivot-1)
-	quickSortSub1(arr, pivot+1, right)
+	quickSortSub1(Arr, left, pivot-1)
+	quickSortSub1(Arr, pivot+1, right)
 
+}
+
+func check() {
+	fmt.Println(quickArr, len(quickArr), cap(quickArr))
+
+	for i := 0; i < len(quickArr)-1; i++ {
+		if quickArr[i] > quickArr[i+1] {
+			fmt.Println("error")
+			return
+		}
+	}
+
+	fmt.Println("quick sort works")
+}
+
+func init() {
+	genRandNum()
 }
 
 func main() {
 
-	genRandNum()
+	quickSort1(quickArr)
 
-	quickSort1(arr)
-
-	fmt.Println(arr)
+	check()
 	fmt.Println("Learn sort.")
 }
